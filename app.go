@@ -53,7 +53,14 @@ func main() {
 			fmt.Println(transitions[1].ID)
 			// Do whatever you want from here...
 			if pullRequest.Action == "edited" {
-				res, err := client.Issue.DoTransition(issue.ID, transitions[1].ID)
+				// res, err := client.Issue.DoTransition(issue.ID, transitions[1].ID)
+				i := &jira.Issue{
+					Key: issueKey,
+					Fields: &jira.IssueFields{
+						Description: "edit description 1",
+					},
+				}
+				res, _, err := client.Issue.Update(i)
 				if err != nil {
 					fmt.Println("Error : ", err)
 				}
